@@ -1,33 +1,29 @@
 import Grid from '@mui/material/Grid';
-import Brand from "../../datastructures/Brand";
+import Label from "../../datastructures/Lable";
 import Chip from '@mui/material/Chip';
 import Avatar from '@mui/material/Avatar';
-
-const labelOptions = [
-    new Brand("Old Spice", "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Old_Spice_wordmark.svg/1280px-Old_Spice_wordmark.svg.png"),
-    new Brand("Heinz", "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Heinz-logo.svg/1280px-Heinz-logo.svg.png"),
-    new Brand("IKEA", "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Ikea_logo.svg/2560px-Ikea_logo.svg.png"),
-    new Brand("T-Mobile", "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Deutsche_Telekom_2022.svg/225px-Deutsche_Telekom_2022.svg.png"),
-]
 
 function Item(props: any) {
     return (
         <Chip
-        avatar={<Avatar alt={props.brand.name} src={props.brand.logo_url} />}
-        label={props.brand.name}
+        avatar={<Avatar alt={props.lable.name} src={props.lable.logo_url} />}
+        label={props.lable.name}
         variant="outlined"
-        onClick={() => props.logAnswer(props.brand.name)}
+        onClick={() => props.logAnswer(props.id)}
         />
     )
 }
 
 export default function Suggestions(props: any) {
+
+    const lables = props.lables;
+
     let filteredOptions = [];
     if (props.input === "") {
-        filteredOptions = labelOptions;
+        filteredOptions = lables;
     } else {
-        filteredOptions = labelOptions.filter((el: Brand) => {
-            return el.name.toLowerCase().includes(props.inputText);
+        filteredOptions = lables.filter((el: any) => {
+            return el[0].name.toLowerCase().includes(props.inputText);
         });
     }
 
@@ -38,9 +34,9 @@ export default function Suggestions(props: any) {
         justifyContent="flex-start"
         alignItems="flex-start"
         >
-            {filteredOptions.map((brand, index) => (
-            <Grid item xs="auto" key={index}>
-                <Item brand={brand} logAnswer={props.logAnswer}/>
+            {filteredOptions.map((e: any) => (
+            <Grid item xs="auto" key={e[1]}>
+                <Item lable={e[0]} id={e[1]} logAnswer={props.logAnswer}/>
             </Grid>
             ))}
       </Grid>

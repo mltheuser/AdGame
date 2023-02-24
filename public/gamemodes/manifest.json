@@ -1,0 +1,6 @@
+{
+    "modes": [
+        {"numChallanges": 3, "title": "Test Mode", "challangeData": "test.json"},
+        {"numChallanges": 5, "title": "Test Mode 2", "challangeData": "test.json"}
+    ]
+}

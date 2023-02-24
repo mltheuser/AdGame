@@ -8,34 +8,27 @@ import GameProgress from './GameProgress';
 import GuessArea from './GuessArea/GuessArea';
 import './VideoSurface.css';
 
-const videoOptions = [
-    {video: new Video("2BXRGzjo1_Q", 86), label: ["IKEA"]},
-    {video: new Video("keOaQm6RpBg", 73), label: ["Heinz Tomato Ketchup", "Heinz"]},
-    {video: new Video("owGykVbfgUE", 24), label: ["Old Spice", "Procter & Gamble"]},
-];
-
 export default class VideoSurface extends Component<any> {
 
   player: any;
+
   game = new Game(this.props.gameConfig);
 
-  state = {
+  state: any = {
     player_init: false,
     player_ready: false,
 
-    currentChallange: this.getChallange(),
-    answer: "",
-    progress: this.game.progress,
+    answer: -1,
+
+    currentChallange: undefined,
+    progress: Array(this.props.gameConfig.steps).fill(-1),
   }
 
-  getChallange() {
-    const random_index = Math.floor(Math.random() * videoOptions.length);
-    return videoOptions[random_index];
-  }
-
-  getNextVideo() {
+  async getNextVideo() {
+    console.log("player");
+    console.log(this.player);
     this.setState({
-      currentChallange: this.getChallange(),
+      currentChallange: await this.game.getChallange(),
     }, () => {
       this.player.loadVideoById(this.state.currentChallange.video.video_id);
     });
@@ -44,7 +37,7 @@ export default class VideoSurface extends Component<any> {
   onEnd() {
     console.log("frindship ended");
     const newProgress = [...this.state.progress];
-    if (this.state.currentChallange.label.indexOf(this.state.answer) !== -1) {
+    if (this.state.currentChallange.lable_ids.indexOf(this.state.answer) !== -1) {
       console.log("WON!!!");
       newProgress[this.game.step] = 1;
     } else {
@@ -53,7 +46,7 @@ export default class VideoSurface extends Component<any> {
     }
 
     this.setState({
-      answer: "",
+      answer: -1,
       progress: newProgress,
     }, () => {
       this.game.step += 1;
@@ -88,7 +81,8 @@ export default class VideoSurface extends Component<any> {
     }
   }
 
-  loadVideo() {
+  async loadVideo() {
+    // needed to not init the player twice
     if (this.player !== undefined) {
       return;
     }
@@ -96,7 +90,7 @@ export default class VideoSurface extends Component<any> {
     const window_handle: any = window;
     // the Player object is created uniquely based on the id in props
     this.player = new window_handle.YT.Player('video_player', {
-      videoId: this.state.currentChallange.video.video_id,
+      videoId: "",
       playerVars: {
         'cc_load_policy': 3, 
         'iv_load_policy': 3, 
@@ -137,13 +131,14 @@ export default class VideoSurface extends Component<any> {
     }
   };
 
-  onPlayerReady(e: any) {
+  async onPlayerReady(e: any) {
+    await this.getNextVideo();
     this.setState({
       player_init: true,
     });
   };
 
-  logAnswer(answer: string) {
+  logAnswer(answer: number) {
     if (this.player.getCurrentTime() < this.state.currentChallange.video.end_t) {
       this.player.seekTo(this.state.currentChallange.video.end_t, true);
       this.setState({
@@ -160,7 +155,7 @@ export default class VideoSurface extends Component<any> {
               <div id={'video_player'} />
             </div>
             {this.state.player_init ? <CountdownBar player={this.player} end_t={this.state.currentChallange.video.end_t}/> : <div></div>}
-            {this.state.player_init ? <GuessArea logAnswer={this.logAnswer.bind(this)}/> : <div></div>}
+            {this.state.player_init ? <GuessArea lables={this.game.lables} logAnswer={this.logAnswer.bind(this)}/> : <div></div>}
             <GameProgress progress={this.state.progress}/>
           </Fragment>
         );

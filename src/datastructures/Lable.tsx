@@ -1,4 +1,4 @@
-export default class Brand {
+export default class Lable {
     logo_url: string;
     name: string;
 

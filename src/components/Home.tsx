@@ -3,8 +3,8 @@ import { useState } from "react";
 import VideoSurface from "./VideoSurface";
 
 const gameModes = [
-    {numChallanges: 3},
-    {numChallanges: 5}
+    {steps: 3, challange: "test", lables: "international_tv_commercials"},
+    {steps: 5, challange: "test", lables: "international_tv_commercials"}
 ];
 
 export default function Home() {

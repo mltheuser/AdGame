@@ -14,7 +14,7 @@ export default function GuessArea(props: any) {
     return (
         <div>
             <TextField id="outlined-basic" label="Guess" variant="outlined" onChange={inputHandler} />
-            <Suggestions inputText={inputText} logAnswer={props.logAnswer} />
+            <Suggestions inputText={inputText} lables={props.lables} logAnswer={props.logAnswer} />
         </div>
     );
 }
