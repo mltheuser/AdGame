@@ -1,0 +1,40 @@
+body {
+	font-family: sans-serif;
+}
+
+.youtubeContainer {
+	overflow: hidden;
+	width: 50%;
+	/* Keep it the right aspect-ratio */
+	aspect-ratio: 16/9;
+	/* No clicking/hover effects */
+	pointer-events: none;
+}
+
+iframe {
+    /* Extend it beyond the viewport... */
+    width: 300%;
+    height: 100%;
+    /* ...and bring it back again */
+    margin-left: -100%;
+}
+
+#videoSkeleton {
+    position: inherit;
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    animation: skeletonAnimation 1.5s ease-in-out 0.5s infinite;
+}
+
+@keyframes skeletonAnimation {
+	0% {
+		background: #23272e;
+	}
+	50% {
+		background: #282c34;
+	}
+	100% {
+		background: #23272e;
+	}
+}
+

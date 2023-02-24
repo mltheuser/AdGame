@@ -1,0 +1,11 @@
+{
+    "labels": [
+        ["Heinz", "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Old_Spice_wordmark.svg/1280px-Old_Spice_wordmark.svg.png"], 
+        ["Old Spice", "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Heinz-logo.svg/1280px-Heinz-logo.svg.png"]
+    ],
+    "challanges": [
+        ["2BXRGzjo1_Q", 86, ["Old Spice", "Procter & Gamble"]], 
+        ["keOaQm6RpBg", 73, ["Heinz"]], 
+        ["keOaQm6RpBg", 24, ["IKEA"]]
+    ]
+}
