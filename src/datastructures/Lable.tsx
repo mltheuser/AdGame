@@ -1,9 +1,7 @@
 export default class Lable {
-    logo_url: string;
     name: string;
 
-    constructor(name: string, logo_url: string) {
-        this.logo_url = logo_url;
+    constructor(name: string) {
         this.name = name;
     }
 }

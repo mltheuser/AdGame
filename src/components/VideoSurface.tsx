@@ -155,8 +155,9 @@ export default class VideoSurface extends Component<any> {
               <div id={'video_player'} />
             </div>
             {this.state.player_init ? <CountdownBar player={this.player} end_t={this.state.currentChallange.video.end_t}/> : <div></div>}
-            {this.state.player_init ? <GuessArea lables={this.game.lables} logAnswer={this.logAnswer.bind(this)}/> : <div></div>}
-            <GameProgress progress={this.state.progress}/>
+            <div className='gameControls'>
+              {this.state.player_init ? <GuessArea lables={this.game.lables} logAnswer={this.logAnswer.bind(this)} progress={this.state.progress}/> : <div></div>}
+            </div>
           </Fragment>
         );
     }

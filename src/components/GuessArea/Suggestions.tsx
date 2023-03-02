@@ -1,16 +1,20 @@
 import Grid from '@mui/material/Grid';
-import Label from "../../datastructures/Lable";
-import Chip from '@mui/material/Chip';
-import Avatar from '@mui/material/Avatar';
+import Button, { ButtonProps } from '@mui/material/Button';
+import styled from '@emotion/styled';
+
+const ItemButton = styled(Button)<ButtonProps>(({ theme }) => ({
+    color: "rgb(0 0 0 / 75%)",
+    backgroundColor: "white",
+    '&:hover': {
+      backgroundColor: "white",
+    },
+}));
 
 function Item(props: any) {
     return (
-        <Chip
-        avatar={<Avatar alt={props.lable.name} src={props.lable.logo_url} />}
-        label={props.lable.name}
-        variant="outlined"
-        onClick={() => props.logAnswer(props.id)}
-        />
+        <ItemButton sx={{fontFamily: "Krona One, Roboto"}} variant="contained" onClick={() => props.logAnswer(props.id)}>
+            {props.lable.name}
+        </ItemButton>
     )
 }
 
@@ -33,6 +37,7 @@ export default function Suggestions(props: any) {
         direction="row"
         justifyContent="flex-start"
         alignItems="flex-start"
+        spacing={{ xs: 2, md: 2 }} columns={{ xs: 4, sm: 8, md: 12 }}
         >
             {filteredOptions.map((e: any) => (
             <Grid item xs="auto" key={e[1]}>

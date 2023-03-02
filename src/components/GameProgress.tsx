@@ -2,7 +2,7 @@ export default function GameProgress(props: any) {
 
 
     return (
-        <div>
+        <div className="progressArea">
             {props.progress.map((val: number, index: number) => {
                 if (val < 0) {
                     return (

@@ -1,6 +1,16 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import LinearProgress from '@mui/material/LinearProgress';
+import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
+import styled from '@emotion/styled';
+
+const WhiteProgressBar = styled(LinearProgress)<LinearProgressProps>(({ theme }) => ({
+  '&.MuiLinearProgress-colorPrimary': {
+    backgroundColor: "transparent",
+  },
+  '.MuiLinearProgress-bar': {
+    backgroundColor: "white",
+  }
+}));
 
 export default function CountdownBar(props: any) {
 
@@ -24,7 +34,7 @@ export default function CountdownBar(props: any) {
 
   return (
     <Box sx={{ width: '50%' }}>
-      <LinearProgress variant="determinate" value={progress} />
+      <WhiteProgressBar variant="determinate" value={progress} />
     </Box>
   );
 }

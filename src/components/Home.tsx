@@ -13,8 +13,8 @@ export default function Home() {
     if (currentGameMode < 0) {
         return (
             <div>
-                <Button variant="contained" onClick={() => setCurrentGameMode(0)}>Start Test Mode</Button>
-                <Button variant="contained" onClick={() => setCurrentGameMode(1)}>Start Test Mode 2</Button>
+                <Button className="GameModeButton" variant="contained" onClick={() => setCurrentGameMode(0)}>Start Test Mode</Button>
+                <Button className="GameModeButton" variant="contained" onClick={() => setCurrentGameMode(1)}>Start Test Mode 2</Button>
             </div>
         )
     } else {

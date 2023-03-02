@@ -4,6 +4,8 @@ import Video from "./Video";
 
 export default class Game {
 
+    config: any;
+
     step: number;
     steps: number;
 
@@ -14,6 +16,8 @@ export default class Game {
     constructor(config: any) {
         this.step = 0;
         this.steps = config.steps;
+
+        this.config = config;
     }
 
     async loadData() {
@@ -35,15 +39,15 @@ export default class Game {
     }
 
     async parseChallanges() {
-        const json = await (await (await fetch(`http://localhost:3000/gamemodes/challanges/test.json`)).json());
+        const json = await (await (await fetch(`/gamemodes/challanges/${this.config.challange}.json`)).json());
         const l = json.challanges;
         this.challanges = l.map((e: any) => new Challange(new Video(e[0], e[1]), e[2]));
     }
 
     async parseLables() {
-        const json = await (await (await fetch(`http://localhost:3000/gamemodes/lables/international_tv_commercials.json`)).json());
+        const json = await (await (await fetch(`/gamemodes/lables/${this.config.lables}.json`)).json());
         const l = json.lables;
-        this.lables = l.map((e: any, i: number) => [new Lable(e[0], e[1]), i]);
+        this.lables = l.map((e: any, i: number) => [new Lable(e[0]), i]);
     }
 
     over() {
