@@ -1,6 +1,8 @@
 import Grid from '@mui/material/Grid';
 import Button, { ButtonProps } from '@mui/material/Button';
 import styled from '@emotion/styled';
+import Slide from '@mui/material/Slide';
+import topKClosestMatches from '../../utils/matcher';
 
 const ItemButton = styled(Button)<ButtonProps>(({ theme }) => ({
     color: "rgb(0 0 0 / 75%)",
@@ -18,18 +20,24 @@ function Item(props: any) {
     )
 }
 
-export default function Suggestions(props: any) {
-
-    const lables = props.lables;
-
+function filter_by_guess(input: string, lables: Array<string>) {
     let filteredOptions = [];
-    if (props.input === "") {
+    if (input === "") {
         filteredOptions = lables;
     } else {
+        /*
         filteredOptions = lables.filter((el: any) => {
-            return el[0].name.toLowerCase().includes(props.inputText);
+            return el[0].name.toLowerCase().includes(input);
         });
+        */
+        filteredOptions = topKClosestMatches(lables, input, 3);
     }
+    return filteredOptions;
+}
+
+function Suggestions(props: any) {
+
+    const filteredOptions = filter_by_guess(props.inputText, props.lables);
 
     return (
         <Grid
@@ -47,3 +55,5 @@ export default function Suggestions(props: any) {
       </Grid>
     )
 }
+
+export {Suggestions, filter_by_guess};
