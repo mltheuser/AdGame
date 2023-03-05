@@ -1,62 +1,74 @@
-import * as natural from 'natural';
-// @ts-ignore
-import { BinaryHeap } from 'js-data-structures';
+export default function topKClosestMatches(lables: any[], search: string, k: number): string[] {
+  // Calculate Levenshtein distance between search string and list of strings
+  const distances = lables.map((lable_tuple) => {
+    const string = lable_tuple[0].name.toLowerCase();
+    const distanceMatrix = new Array(search.length + 1).fill(null).map(() => new Array(string.length + 1).fill(null));
 
-class TrieNode {
-  children: Map<string, TrieNode>;
-  isEndOfWord: boolean;
-  words: Set<string>;
-
-  constructor() {
-    this.children = new Map();
-    this.isEndOfWord = false;
-    this.words = new Set();
-  }
-}
-
-function insertIntoTrie(root: TrieNode, word: string, originalWord: string) {
-  let currentNode = root;
-  for (const char of word) {
-    if (!currentNode.children.has(char)) {
-      currentNode.children.set(char, new TrieNode());
+    for (let i = 0; i <= string.length; i += 1) {
+      distanceMatrix[0][i] = i;
     }
-    currentNode = currentNode.children.get(char)!;
-    currentNode.words.add(originalWord);
-  }
-  currentNode.isEndOfWord = true;
-}
 
-function findTopKMatches(root: TrieNode, search: string, k: number): string[] {
-  let currentNode = root;
-  for (const char of search) {
-    if (!currentNode.children.has(char)) {
-      return [];
+    for (let j = 0; j <= search.length; j += 1) {
+      distanceMatrix[j][0] = j;
     }
-    currentNode = currentNode.children.get(char)!;
-  }
 
-  const matches: string[] = Array.from(currentNode.words);
-  const heap: [number, string][] = [];
-  for (const match of matches) {
-    const distance = natural.LevenshteinDistance(search, match);
+    for (let j = 1; j <= search.length; j += 1) {
+      for (let i = 1; i <= string.length; i += 1) {
+        if (search[j - 1] === string[i - 1]) {
+          distanceMatrix[j][i] = distanceMatrix[j - 1][i - 1];
+        } else {
+          const substitutionCost = distanceMatrix[j - 1][i - 1] + 1;
+          const insertionCost = distanceMatrix[j][i - 1] + 1;
+          const deletionCost = distanceMatrix[j - 1][i] + 1;
+          distanceMatrix[j][i] = Math.min(substitutionCost, insertionCost, deletionCost);
+        }
+      }
+    }
+
+    return distanceMatrix[search.length][string.length];
+  });
+
+  // Use a heap to keep track of the top k closest matches
+  const heap: [number, number][] = [];
+  distances.forEach((distance, index) => {
     if (heap.length < k) {
-      heap.push([distance, match]);
+      heap.push([distance, index]);
       if (heap.length === k) {
-        BinaryHeap.heapify(heap, (a: any, b: any) => b[0] - a[0]);
+        heapify(heap);
       }
     } else if (distance < heap[0][0]) {
-      heap[0] = [distance, match];
-      BinaryHeap.heapify(heap, (a: any, b: any) => b[0] - a[0]);
+      heap[0] = [distance, index];
+      heapify(heap);
     }
-  }
+  });
 
-  return heap.map(([_distance, match]) => match).reverse();
+  // Get the top k closest matches and sort them by similarity
+  const closestMatches: string[] = heap.map(([_distance, index]) => lables[index]);
+  closestMatches.sort((a, b) => {
+    const aDistance = distances[lables.indexOf(a)];
+    const bDistance = distances[lables.indexOf(b)];
+    return aDistance - bDistance;
+  });
+
+  return closestMatches;
 }
 
-export default function topKClosestMatches(strings: string[], search: string, k: number): string[] {
-  const root = new TrieNode();
-  for (const string of strings) {
-    insertIntoTrie(root, string, string);
+function heapify<T>(array: T[]): void {
+  for (let i = Math.floor(array.length / 2); i >= 0; i--) {
+    sink(array, i, array.length);
   }
-  return findTopKMatches(root, search, k);
+}
+
+function sink<T>(array: any[], index: number, length: number): void {
+  while (2 * index + 1 < length) {
+    let childIndex = 2 * index + 1;
+    if (childIndex + 1 < length && array[childIndex][0] < array[childIndex + 1][0]) {
+      childIndex++;
+    }
+    if (array[index][0] >= array[childIndex][0]) {
+      break;
+    }
+    [array[index], array[childIndex]] = [array[childIndex], array[index]];
+    index = childIndex;
+  }
 }

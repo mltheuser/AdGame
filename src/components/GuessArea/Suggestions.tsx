@@ -20,7 +20,7 @@ function Item(props: any) {
     )
 }
 
-function filter_by_guess(input: string, lables: Array<string>) {
+function filter_by_guess(input: string, lables: Array<any>) {
     let filteredOptions = [];
     if (input === "") {
         filteredOptions = lables;
@@ -31,6 +31,7 @@ function filter_by_guess(input: string, lables: Array<string>) {
         });
         */
         filteredOptions = topKClosestMatches(lables, input, 3);
+        console.log(filteredOptions);
     }
     return filteredOptions;
 }
