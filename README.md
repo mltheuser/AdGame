@@ -1,6 +1,13 @@
 # Ad Game
 
 A little game where you have to guess which brand is being advertised. Build with React. <br/>
-It's not ready yet, but if you want to try it out, you can do so [->here<-](https://adgame-21084.web.app).
+It's not ready yet, but if you want to try it out.
 
-<img src="https://user-images.githubusercontent.com/25958978/222397092-82f8946f-0f32-4593-9a95-dc71bdcb9987.png" width="75%" alt="demo">
+<p>
+  <a href="https://adgame-21084.web.app">
+    <img src="https://img.shields.io/badge/►%20Play%20Live-007BFF?style=for-the-badge&logoColor=white" alt="Launch Live Demo"/>
+  </a>
+</p>
+
+
+<img width="45%" alt="Screenshot 2025-06-17 at 18 38 51" src="https://github.com/user-attachments/assets/f9fa14be-66c6-4aed-a5e1-2b01ec53353d" />
