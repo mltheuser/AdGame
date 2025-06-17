@@ -21,11 +21,34 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 3%;
+  /* Changed to justify-content to better center the landing page */
+  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
   font-family: "Krona One", "Roboto","Helvetica","Arial",sans-serif;
 }
+
+/* New styles for the landing page layout */
+.LandingPage-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem; /* Adds nice spacing between title, subtitle, and button */
+  padding: 2rem;
+}
+
+.LandingPage-title {
+  font-size: 3.5rem !important; /* Make title bigger */
+  font-weight: bold !important;
+  line-height: 1.2 !important;
+}
+
+.LandingPage-subtitle {
+  font-size: 1.1rem;
+  color: #cccccc; /* A slightly dimmer white for contrast */
+  max-width: 500px;
+}
+
 
 .App-link {
   color: #61dafb;

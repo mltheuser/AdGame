@@ -1,10 +1,9 @@
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { useState } from "react";
 import VideoSurface from "./VideoSurface";
 
 const gameModes = [
     {steps: 3, challange: "test", lables: "international_tv_commercials"},
-    {steps: 5, challange: "test", lables: "international_tv_commercials"}
 ];
 
 export default function Home() {
@@ -12,9 +11,31 @@ export default function Home() {
 
     if (currentGameMode < 0) {
         return (
-            <div>
-                <Button className="GameModeButton" variant="contained" onClick={() => setCurrentGameMode(0)}>Start Test Mode</Button>
-                <Button className="GameModeButton" variant="contained" onClick={() => setCurrentGameMode(1)}>Start Test Mode 2</Button>
+            <div className="LandingPage-content">
+                <Typography variant="h1" className="LandingPage-title">
+                    Guess the Brand
+                </Typography>
+                <Typography className="LandingPage-subtitle">
+                    Watch the commercial. Name the brand. How sharp are you?
+                </Typography>
+                <Button
+                    variant="contained"
+                    onClick={() => setCurrentGameMode(0)}
+                    // The sx prop is perfect for one-off style overrides
+                    sx={{
+                        backgroundColor: 'white',
+                        color: 'black',
+                        fontFamily: '"Krona One", sans-serif',
+                        fontWeight: 'bold',
+                        fontSize: '1rem',
+                        padding: '12px 28px',
+                        '&:hover': {
+                            backgroundColor: '#e0e0e0', // A slightly darker white on hover
+                        }
+                    }}
+                >
+                    Start Demo
+                </Button>
             </div>
         )
     } else {

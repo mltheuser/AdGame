@@ -32,10 +32,12 @@ export default class Game {
 
     async getChallange() {
         await this.loadData();
-        const random_index = Math.floor(Math.random() * this.challanges.length);
+        const randomIndex = Math.floor(Math.random() * this.challanges.length);
+
         console.log(this.challanges);
-        console.log(random_index);
-        return this.challanges[random_index];
+        console.log(randomIndex);
+
+        return this.challanges.splice(randomIndex, 1)[0];
     }
 
     async parseChallanges() {
